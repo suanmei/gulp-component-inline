@@ -14,6 +14,32 @@ var INLINE_REGEX = /__inline\([^\)].*\)/mg;
 var FILE_REGEX = /__inline\(["']([^"^']*)/;
 
 module.exports = function(options) {
+	
+	function compileCss(compFile) {
+		var result;
+
+		if (/\.scss$/.test(compFile)) {
+			result = sass.renderSync({file:compFile});
+			result = cssmin(String(result.css));
+		} else {
+			result = fs.readFileSync(compFile, 'utf-8');
+			result = cssmin(result);
+		}
+
+		result = result.replace(/\'/g, '"');
+
+		return "__inline('" + result + "')";
+	}
+
+	function compileTmpl(compFile) {
+		var result = fs.readFileSync(compFile, 'utf-8');
+		var content = template.compile(result).toString().replace(/^function anonymous/, 'function');
+
+		content = content.replace("'use strict';", '');
+
+		return '[' + content + '][0]';
+	}
+
     options = options || {}; // 自定义配置扩展口
 
     return through.obj(function(file, enc, cb) {
@@ -48,31 +74,6 @@ module.exports = function(options) {
 
                 return compileResult;
             });
-
-	        function compileCss(compFile) {
-				var result;
-
-				if (/\.scss$/.test(compFile)) {
-					result = sass.renderSync({file:compFile});
-					result = cssmin(String(result.css));
-				} else {
-					result = fs.readFileSync(compFile, 'utf-8');
-					result = cssmin(result);
-				}
-
-	            result = result.replace(/\'/g, '"');
-
-	            return "__inline('" + result + "')";
-	        }
-
-	        function compileTmpl(compFile) {
-	            var result = fs.readFileSync(compFile, 'utf-8');
-	            var content = template.compile(result).toString().replace(/^function anonymous/, 'function');
-
-	            content = content.replace("'use strict';", '');
-
-	            return '[' + content + '][0]';
-	        }
 
             file.contents = new Buffer(contents);
         }
