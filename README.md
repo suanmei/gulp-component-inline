@@ -1,6 +1,6 @@
 # gulp-component-inline
-[![Build Status](travis-img)](travis-url)
-[![Coverage Status](coveralls-img)](coveralls-url)
+[![Build Status][travis-img]][travis-url]
+[![Coverage Status][coveralls-img]][coveralls-url]
 [![License][license-img]][license-url]
 
 Support for referencing artTemplate file (or css files) directly in Js, then compile them into Js

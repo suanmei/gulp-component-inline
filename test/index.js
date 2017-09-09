@@ -1,39 +1,25 @@
 'use strict';
 
-var cat = require('../index.js');
+var component = require('../index.js');
 var gutil = require('gulp-util');
 var should = require('should');
 var fs = require('fs');
-var assert = require('assert');
 
-describe('## gulp-file-include', () => {
+describe('## gulp-component-inline', () => {
+	var result = fs.readFileSync('test/fixtures/result.js', 'utf8');
+	it('should work in buffer mode && compile arttemplate and css file into js', done => {
+	    var file = new gutil.File({path: 'test/fixtures/index.js', contents: fs.readFileSync('test/fixtures/index.js')});
 
-	it('should work in buffer mode', function(done) {
-		var stream = cat();
-        var fakeBuffer = new Buffer("wadup");
-        var fakeFile = new gutil.File({
-            contents: fakeBuffer
-        });
+	    var stream = component();
+	    stream.on('data', newFile => {
+	        should.exist(newFile);
+	        should.exist(newFile.contents);
 
-        var fakeBuffer2 = new Buffer("doe");
-        var fakeFile2 = new gutil.File({
-            contents: fakeBuffer2
-        });
+	        String(newFile.contents).should.equal(result);
+	        done();
+	    });
 
-        stream.on('data', function(newFile) {
-            if (newFile === fakeFile) {
-                assert.equal(fakeBuffer, newFile.contents);
-            } else {
-                assert.equal(fakeBuffer2, newFile.contents);
-            }
-        });
-
-        stream.on('end', function() {
-            done();
-        });
-
-        stream.write(fakeFile);
-        stream.write(fakeFile2);
-        stream.end();
+	    stream.write(file);
+	    stream.end();
     });
 });

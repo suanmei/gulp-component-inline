@@ -1,1 +1,3 @@
-var a = 1;
+__inline('../tmpl/index.tmpl');
+__inline('../css/index.css');
+__inline('../css/index.scss');

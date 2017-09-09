@@ -4,12 +4,13 @@ var through = require('through2');
 var path = require('path');
 var fs = require('fs');
 var template = require('ali-arttemplate');
+var sass = require('sass');
 var cssmin = require('cssmin');
 var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 
 var PLUGIN_NAME = 'gulp-component-inline';
-var INLINE_REGEX = /__inline\([^\)].*\)/m;
+var INLINE_REGEX = /__inline\([^\)].*\)/mg;
 var FILE_REGEX = /__inline\(["']([^"^']*)/;
 
 module.exports = function(options) {
@@ -26,7 +27,7 @@ module.exports = function(options) {
         }
 
         if (file.isBuffer()) {
-			var contents = fs.readFileSync(file, 'utf-8');
+			var contents = fs.readFileSync(file.path, 'utf-8');
 
             contents = contents.replace(INLINE_REGEX, function(matchString, index) {
                 var compFile = matchString.match(FILE_REGEX)[1];
@@ -39,7 +40,7 @@ module.exports = function(options) {
 			          	return cb();
 		        }
 
-                if(/\.css$/.test(compFile)) {
+                if (/\.s?css$/.test(compFile)) {
                     compileResult = compileCss(compFile);
                 } else {
                     compileResult = compileTmpl(compFile);
@@ -49,9 +50,16 @@ module.exports = function(options) {
             });
 
 	        function compileCss(compFile) {
-	            var result = fs.readFileSync(compFile, 'utf-8');
+				var result;
 
-	            result = cssmin(result);
+				if (/\.scss$/.test(compFile)) {
+					result = sass.renderSync({file:compFile});
+					result = cssmin(String(result.css));
+				} else {
+					result = fs.readFileSync(compFile, 'utf-8');
+					result = cssmin(result);
+				}
+
 	            result = result.replace(/\'/g, '"');
 
 	            return "__inline('" + result + "')";
