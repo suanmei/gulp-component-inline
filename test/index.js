@@ -7,7 +7,7 @@ var fs = require('fs');
 
 describe('## gulp-component-inline', function() {
 	var result = fs.readFileSync('test/fixtures/result.js', 'utf8');
-	it('should work in buffer mode && compile arttemplate and css file into js', function() {
+	it('should work in buffer mode && compile arttemplate and css file into js', function(done) {
 	    var file = new gutil.File({path: 'test/fixtures/index.js', contents: fs.readFileSync('test/fixtures/index.js')});
 
 	    var stream = component();
