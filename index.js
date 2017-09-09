@@ -44,7 +44,7 @@ module.exports = function(options) {
 
     return through.obj(function(file, enc, cb) {
 		var _this = this;
-		
+
         if (file.isNull()) {
             return cb(null, file);
         }
@@ -64,8 +64,8 @@ module.exports = function(options) {
 				compFile = path.join(path.dirname(file.path), '/', compFile);
 
 				if (!fs.existsSync(compFile)) {
-					_this.emit('error', new PluginError(PLUGIN_NAME, "File is not existed"));
-			        return cb();
+					_this.emit('error', new PluginError(PLUGIN_NAME, "File is not existed: " + compFile + ' in\n ' + file.path));
+			        return '// File is not existed' + compFile;
 		        }
 
                 if (/\.s?css$/.test(compFile)) {

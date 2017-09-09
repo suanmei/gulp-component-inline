@@ -53,10 +53,18 @@ describe('## gulp-component-inline', function() {
 	        done();
 	    });
 
+	    stream.write(file);
+	    stream.end();
+    });
+
+	it('should find no file in path of "inlined file" and continue', function(done) {
+	    var file = new gutil.File({path: 'test/fixtures/error.js', contents: fs.readFileSync('test/fixtures/error.js')});
+	    var stream = component();
+
 		stream.on('error', function(err) {
-	        err.message.should.equal('File is not existed');
-	        done();
-	    });
+			err.message.should.startWith('File is not existed');
+			done();
+		});
 
 	    stream.write(file);
 	    stream.end();
