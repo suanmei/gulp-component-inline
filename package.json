@@ -1,6 +1,6 @@
 {
   "name": "gulp-component-inline",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Support for referencing artTemplate file (or css files) directly in JS by '__inline', then compile them into JS",
   "license": "MIT",
   "repository": {
