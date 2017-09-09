@@ -43,6 +43,8 @@ module.exports = function(options) {
     options = options || {}; // 自定义配置扩展口
 
     return through.obj(function(file, enc, cb) {
+		var _this = this;
+		
         if (file.isNull()) {
             return cb(null, file);
         }
@@ -62,8 +64,8 @@ module.exports = function(options) {
 				compFile = path.join(path.dirname(file.path), '/', compFile);
 
 				if (!fs.existsSync(compFile)) {
-					this.emit('error', new PluginError(PLUGIN_NAME, "File not found: " + compFile));
-			          	return cb();
+					_this.emit('error', new PluginError(PLUGIN_NAME, "File is not existed"));
+			        return cb();
 		        }
 
                 if (/\.s?css$/.test(compFile)) {
