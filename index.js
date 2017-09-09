@@ -26,45 +26,9 @@ module.exports = function(options) {
         }
 
         if (file.isBuffer()) {
-			var contents = fs.readFileSync(file, 'utf-8');
+			var contents = 'wadup';
 
-            contents = contents.replace(INLINE_REGEX, function(matchString, index) {
-                var compFile = matchString.match(FILE_REGEX)[1];
-                var compileResult;
 
-				compFile = path.join(path.dirname(file.path), '/', compFile);
-
-				if (!fs.existsSync(compFile)) {
-					this.emit('error', new PluginError(PLUGIN_NAME, "File not found: " + compFile));
-			          	return cb();
-		        }
-
-                if(/\.css$/.test(compFile)) {
-                    compileResult = compileCss(compFile);
-                } else {
-                    compileResult = compileTmpl(compFile);
-                }
-
-                return compileResult;
-            });
-
-	        function compileCss(compFile) {
-	            var result = fs.readFileSync(compFile, 'utf-8');
-
-	            result = cssmin(result);
-	            result = result.replace(/\'/g, '"');
-
-	            return "__inline('" + result + "')";
-	        }
-
-	        function compileTmpl(compFile) {
-	            var result = fs.readFileSync(compFile, 'utf-8');
-	            var content = template.compile(result).toString().replace(/^function anonymous/, 'function');
-
-	            content = content.replace("'use strict';", '');
-				
-	            return '[' + content + '][0]';
-	        }
 
             file.contents = new Buffer(contents);
         }

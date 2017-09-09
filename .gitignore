@@ -4,6 +4,9 @@
 .idea
 
 
+package-lock.json
+
+
 # Node modules
 # ------------
 
