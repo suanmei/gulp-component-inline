@@ -3,14 +3,13 @@
 [![Coverage Status][coveralls-img]][coveralls-url]
 [![License][license-img]][license-url]
 
-Support for referencing artTemplate file (or css files) directly in Js, then compile them into Js
+Gulp Plugin which inlines artTemplate file (or css files) directly in JS by '\_\_inline', and compiles them into JS
 
 # Install
 	npm install gulp-header-license --save-dev
 
 # Basic Usage
-
-``` js
+```
 const gulp = require('gulp');
 const component = require('gulp-component-inline');
 
@@ -21,40 +20,38 @@ gulp.task('default', () =>
 );
 ```
 
-The plugin can actively recognize which type of file do you want to compile. So it don't need any extra APIs, just use it simply in you task. 
+The plugin can actively recognize which type of file do you want to compile. So it don't need any extra APIs, just use it simply in you task.
 
 # Example
 
 ### index.js
-``` js
+```
 __inline('../tmpl/index.tmpl');
 __inline('../css/index.css');
 __inline('../css/index.scss');
 ```
 
 ### index.tmpl
-``` html
+```
 <span class="menu-name">{{menu.title}}</span>
 ```
 
 ### index.css
-``` css
+```
 p {
-	margin: 0;
+  margin: 0;
 }
-
 ```
 
 ### index.scss
-``` css
+```
 div {
-	text-align: center;
+  text-align: center;
 
-	a {
-		color: red;
-	}
+  a {
+    color: red;
+  }
 }
-
 ```
 
 Finally, `index.js` will compile to what is bellow:
