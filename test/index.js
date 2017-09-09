@@ -11,7 +11,7 @@ describe('## gulp-component-inline', function() {
 	    var file = new gutil.File({path: 'test/fixtures/index.js', contents: fs.readFileSync('test/fixtures/index.js')});
 
 	    var stream = component();
-	    stream.on('data', newFile => {
+	    stream.on('data', function(newFile) {
 	        should.exist(newFile);
 	        should.exist(newFile.contents);
 
