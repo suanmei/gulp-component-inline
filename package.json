@@ -13,7 +13,8 @@
     "url": "https://suanmei.github.com"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "engines": {
     "node": ">=1.0.4"
@@ -43,6 +44,7 @@
     "through2": "^2.0.3"
   },
   "devDependencies": {
+    "coveralls": "^2.13.1",
     "mocha": "^3.5.0",
     "should": "^13.0.1"
   }
