@@ -10,7 +10,7 @@
   "author": {
     "name": "suanmei",
     "email": "code_lee@sina.com",
-    "url": "suanmei.github.com"
+    "url": "https://suanmei.github.com"
   },
   "engines": {
     "node": ">=0.10.0"
