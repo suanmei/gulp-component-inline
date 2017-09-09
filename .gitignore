@@ -4,10 +4,18 @@
 .idea
 
 
-package-lock.json
-
-
 # Node modules
 # ------------
 
 node_modules
+
+
+# Coveralls
+# ------------
+
+coverage
+
+# Files
+# ------------
+
+package-lock.json

@@ -13,7 +13,7 @@
     "url": "https://suanmei.github.com"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "export NODE_ENV=production && istanbul cover node_modules/mocha/bin/_mocha -- --ui exports --colors 'test/index.js'",
     "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "engines": {
