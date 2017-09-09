@@ -4,7 +4,7 @@ var through = require('through2');
 var path = require('path');
 var fs = require('fs');
 var template = require('ali-arttemplate');
-var sass = require('sass');
+var sass = require('node-sass');
 var cssmin = require('cssmin');
 var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
@@ -14,7 +14,7 @@ var INLINE_REGEX = /__inline\([^\)].*\)/mg;
 var FILE_REGEX = /__inline\(["']([^"^']*)/;
 
 module.exports = function(options) {
-	
+
 	function compileCss(compFile) {
 		var result;
 
