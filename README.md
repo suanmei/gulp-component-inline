@@ -1,2 +1,2 @@
-# gulp-component-inline [![Build Status](https://travis-ci.org/suanmei/gulp-component-inline.svg?branch=master)](https://travis-ci.org/suanmei/gulp-component-inline)
+# gulp-component-inline [![Build Status](https://travis-ci.org/suanmei/gulp-component-inline.svg?branch=master)](https://travis-ci.org/suanmei/gulp-component-inline) [![Coverage Status](https://coveralls.io/repos/github/suanmei/gulp-component-inline/badge.svg?branch=master)](https://coveralls.io/github/suanmei/gulp-component-inline?branch=master)
 Support for referencing artTemplate file (or css files) directly in Js, then compile them into Js
