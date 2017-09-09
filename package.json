@@ -16,7 +16,7 @@
     "test": "mocha"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=1.0.4"
   },
   "bugs": {
     "url": "https://github.com/suanmei/gulp-component-inline/issues"
@@ -39,12 +39,11 @@
     "ali-arttemplate": "^3.0.3",
     "cssmin": "^0.4.3",
     "gulp-util": "^3.0.8",
-    "sass": "^1.0.0-beta.2",
+    "node-sass": "^4.5.3",
     "through2": "^2.0.3"
   },
   "devDependencies": {
     "mocha": "^3.5.0",
-    "node-sass": "^4.5.3",
     "should": "^13.0.1"
   }
 }
