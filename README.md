@@ -6,7 +6,7 @@
 Gulp Plugin which inlines artTemplate file (or css files) directly in JS by '\_\_inline', and compiles them into JS
 
 # Install
-	npm install gulp-header-license --save-dev
+	npm install gulp-component-inline --save-dev
 
 # Basic Usage
 ```
