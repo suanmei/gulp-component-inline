@@ -15,35 +15,35 @@ var FILE_REGEX = /__inline\(["']([^"^']*)/;
 
 module.exports = function(options) {
 
-	function compileCss(compFile) {
-		var result;
+    function compileCss(compFile) {
+        var result;
 
-		if (/\.scss$/.test(compFile)) {
-			result = sass.renderSync({file:compFile});
-			result = cssmin(String(result.css));
-		} else {
-			result = fs.readFileSync(compFile, 'utf-8');
-			result = cssmin(result);
-		}
+        if (/\.scss$/.test(compFile)) {
+            result = sass.renderSync({file: compFile});
+            result = cssmin(String(result.css));
+        } else {
+            result = fs.readFileSync(compFile, 'utf-8');
+            result = cssmin(result);
+        }
 
-		result = result.replace(/\'/g, '"');
+        result = result.replace(/\'/g, '"');
 
-		return "__inline('" + result + "')";
-	}
+        return "__inline('" + result + "')";
+    }
 
-	function compileTmpl(compFile) {
-		var result = fs.readFileSync(compFile, 'utf-8');
-		var content = template.compile(result).toString().replace(/^function anonymous/, 'function');
+    function compileTmpl(compFile) {
+        var result = fs.readFileSync(compFile, 'utf-8');
+        var content = template.compile(result).toString().replace(/^function anonymous/, 'function');
 
-		content = content.replace("'use strict';", '');
+        content = content.replace("'use strict';", '');
 
-		return '[' + content + '][0]';
-	}
+        return '[' + content + '][0]';
+    }
 
     options = options || {}; // 自定义配置扩展口
 
     return through.obj(function(file, enc, cb) {
-		var _this = this;
+        var _this = this;
 
         if (file.isNull()) {
             return cb(null, file);
@@ -55,18 +55,18 @@ module.exports = function(options) {
         }
 
         if (file.isBuffer()) {
-			var contents = fs.readFileSync(file.path, 'utf-8');
+            var contents = fs.readFileSync(file.path, 'utf-8');
 
             contents = contents.replace(INLINE_REGEX, function(matchString, index) {
                 var compFile = matchString.match(FILE_REGEX)[1];
                 var compileResult;
 
-				compFile = path.join(path.dirname(file.path), '/', compFile);
+                compFile = path.join(path.dirname(file.path), '/', compFile);
 
-				if (!fs.existsSync(compFile)) {
-					_this.emit('error', new PluginError(PLUGIN_NAME, "File is not existed: " + compFile + ' in\n ' + file.path));
-			        return '// File is not existed' + compFile;
-		        }
+                if (!fs.existsSync(compFile)) {
+                    _this.emit('error', new PluginError(PLUGIN_NAME, "File is not existed: " + compFile + ' in\n ' + file.path));
+                    return '// File is not existed' + compFile;
+                }
 
                 if (/\.s?css$/.test(compFile)) {
                     compileResult = compileCss(compFile);
